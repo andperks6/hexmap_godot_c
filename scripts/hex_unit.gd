@@ -5,6 +5,9 @@ extends Node3D
 
 const _TRAVEL_SPEED: int = 4
 
+## Speed multiplier for unit rotation animations (in radians per second)
+## Higher values make units turn faster, lower values make turns more gradual
+## Recommended range: 3.0 - 10.0 for smooth gameplay feel
 const _ROTATION_SPEED: float = 5.0
 
 const _VISION_RANGE: int = 3
@@ -168,7 +171,8 @@ func _look_at (point: Vector3) -> void:
 	var from_rotation: Quaternion = self.quaternion
 	var to_rotation: Quaternion = Transform3D.IDENTITY.looking_at(point - self.position).basis.get_rotation_quaternion()
 	var angle: float = from_rotation.angle_to(to_rotation)
-	var speed: float = _ROTATION_SPEED / angle
+	# Calculate rotation speed, clamped to prevent division by very small angles
+	var rotationSpeed: float = _ROTATION_SPEED / maxf(angle, 0.01)
 	
 	if (angle > 0.0):
 		var t: float = 0
@@ -179,7 +183,7 @@ func _look_at (point: Vector3) -> void:
 			var delta_time: float = await _wait_for_next_frame()
 			
 			#Increment t
-			t += delta_time * speed
+			t += delta_time * rotationSpeed
 	
 	self.look_at(point)
 	_orientation = self.rotation_degrees.y
