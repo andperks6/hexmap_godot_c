@@ -470,9 +470,9 @@ func remove_roads () -> void:
 		if (_roads[i]):
 			set_road(i, false)
 
-func set_road (index: int, state: bool) -> void:
+func set_road (i: int, state: bool) -> void:
 	#Set it to false
-	_roads[index] = state
+	_roads[i] = state
 	
 	#Remove the road from its neighbor as well
 	var opposite_direction: HexDirectionsClass.HexDirections = int(HexDirectionsClass.opposite(index))
@@ -538,14 +538,14 @@ func load_hex_cell (file_reader: FileAccess, file_version: int) -> void:
 	var incoming_river_info: int = file_reader.get_8()
 	if (incoming_river_info >= 128):
 		_has_incoming_river = true
-		_incoming_river_direction = incoming_river_info - 128
+		_incoming_river_direction = incoming_river_info - 128 as HexDirectionsClass.HexDirections
 	else:
 		_has_incoming_river = false
 	
 	var outgoing_river_info: int = file_reader.get_8()
 	if (outgoing_river_info >= 128):
 		_has_outgoing_river = true
-		_outgoing_river_direction = outgoing_river_info - 128
+		_outgoing_river_direction = outgoing_river_info - 128 as HexDirectionsClass.HexDirections
 	else:
 		_has_outgoing_river = false
 	

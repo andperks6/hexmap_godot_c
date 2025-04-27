@@ -301,9 +301,9 @@ func _travel_path () -> void:
 
 static func load_from_file (reader: FileAccess, grid: HexGrid) -> void:
 	var coordinates: HexCoordinates = HexCoordinates.load_from_file(reader)
-	var orientation: float = reader.get_float()
+	var hexorientation: float = reader.get_float()
 	
 	var unit: HexUnit = HexUnit.unit_prefab.instantiate() as HexUnit
-	grid.add_unit(unit, grid.get_cell_from_coordinates(coordinates), orientation)
+	grid.add_unit(unit, grid.get_cell_from_coordinates(coordinates), hexorientation)
 
 #endregion

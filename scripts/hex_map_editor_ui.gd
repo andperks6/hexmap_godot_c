@@ -643,12 +643,12 @@ func _set_plant_level (level: float) -> void:
 	active_plant_level = int(level)
 
 func _set_wall_mode (mode: int) -> void:
-	walls_mode = mode
+	walls_mode = mode as Enums.OptionalToggle
 
 func _set_apply_special_feature (toggle: bool) -> void:
 	apply_special_feature = toggle
 
-func _set_special_feature_index (index: float) -> void:
+func _set_special_feature_index (index: int) -> void:
 	active_special_feature = index
 
 func _get_cell_under_cursor () -> HexCell:

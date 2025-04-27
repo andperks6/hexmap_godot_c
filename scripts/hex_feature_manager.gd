@@ -100,30 +100,30 @@ func add_feature (cell: HexCell, pos: Vector3) -> void:
 		return
 	
 	#Get a random value to be used for this feature
-	var hash: HexHash = HexMetrics.sample_hash_grid(pos)
+	var hex_hash: HexHash = HexMetrics.sample_hash_grid(pos)
 	
 	#Pick an urban prefab
-	var urban_prefab: BoxMesh = _pick_prefab(urban_collections, cell.urban_level, hash.a, hash.d)
+	var urban_prefab: BoxMesh = _pick_prefab(urban_collections, cell.urban_level, hex_hash.a, hex_hash.d)
 	
 	#Pick a farm prefab
-	var farm_prefab: BoxMesh = _pick_prefab(farm_collections, cell.farm_level, hash.b, hash.d)
+	var farm_prefab: BoxMesh = _pick_prefab(farm_collections, cell.farm_level, hex_hash.b, hex_hash.d)
 	
 	#Pick a plant prefab
-	var plant_prefab: BoxMesh = _pick_prefab(plant_collections, cell.plant_level, hash.c, hash.d)
+	var plant_prefab: BoxMesh = _pick_prefab(plant_collections, cell.plant_level, hex_hash.c, hex_hash.d)
 	
 	#Choose which prefab to use for this location
 	var prefab: BoxMesh = urban_prefab
-	var used_hash: float = hash.a
+	var used_hash: float = hex_hash.a
 	if (urban_prefab):
-		if (farm_prefab) and (hash.b < hash.a):
+		if (farm_prefab) and (hex_hash.b < hex_hash.a):
 			prefab = farm_prefab
-			used_hash = hash.b
+			used_hash = hex_hash.b
 	elif (farm_prefab):
 		prefab = farm_prefab
-		used_hash = hash.b
+		used_hash = hex_hash.b
 	
 	if (prefab):
-		if (plant_prefab) and (hash.c < used_hash):
+		if (plant_prefab) and (hex_hash.c < used_hash):
 			prefab = plant_prefab
 	elif (plant_prefab):
 		prefab = plant_prefab
@@ -141,7 +141,7 @@ func add_feature (cell: HexCell, pos: Vector3) -> void:
 	feature.position.y += feature_height / 2.0
 	
 	#Randomize the rotation angle of the feature
-	feature.quaternion = Quaternion.from_euler(Vector3(0, 360.0 * hash.e, 0))
+	feature.quaternion = Quaternion.from_euler(Vector3(0, 360.0 * hex_hash.e, 0))
 	
 	#Add this feature as a child of the hex grid chunk
 	add_child(feature)
@@ -232,8 +232,8 @@ func add_special_feature (cell: HexCell, pos: Vector3) -> void:
 			N_geom3d.set_instance_shader_parameter("_index", float(cell.index))
 	
 	#Give it an orientation
-	var hash: HexHash = HexMetrics.sample_hash_grid(pos)
-	instance.quaternion = Quaternion.from_euler(Vector3(0, 360.0 * hash.e, 0))
+	var hex_hash: HexHash = HexMetrics.sample_hash_grid(pos)
+	instance.quaternion = Quaternion.from_euler(Vector3(0, 360.0 * hex_hash.e, 0))
 	
 	#Add it as a child of this node
 	add_child(instance)
@@ -242,11 +242,11 @@ func add_special_feature (cell: HexCell, pos: Vector3) -> void:
 
 #region Private methods
 
-func _pick_prefab (collection: Array[HexFeatureCollection], level: int, hash: float, choice: float) -> BoxMesh:
+func _pick_prefab (collection: Array[HexFeatureCollection], level: int, hex_hash: float, choice: float) -> BoxMesh:
 	if (level > 0):
 		var thresholds: Array[float] = HexMetrics.get_feature_thresholds(level - 1)
 		for i in range(0, len(thresholds)):
-			if (hash < thresholds[i]):
+			if (hex_hash < thresholds[i]):
 				return collection[i].pick(choice)
 	
 	return null
