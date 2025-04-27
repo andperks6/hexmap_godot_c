@@ -17,6 +17,8 @@ var use_uv2_coordinates: bool = false
 
 var use_cell_data: bool = false
 
+var generate_tangents: bool = false
+
 #endregion
 
 #region Overrides
@@ -45,8 +47,9 @@ func end (mat: Material) -> void:
 	#Generate the normals for the mesh
 	_surface_tool.generate_normals()
 	
-	#Generate the tangents for the mesh
-	_surface_tool.generate_tangents()
+	#Generate the tangents for the mesh only if needed
+	if generate_tangents and use_uv_coordinates:
+		_surface_tool.generate_tangents()
 	
 	#Commit the mesh
 	self.mesh = _surface_tool.commit()
