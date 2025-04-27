@@ -1,0 +1,74 @@
+[gd_scene load_steps=18 format=3 uid="uid://b0jwbdlrgt1g2"]
+
+[ext_resource type="Script" uid="uid://dltxxoojehvy2" path="res://scripts/main.gd" id="1_sv3ps"]
+[ext_resource type="Script" uid="uid://mmxlt6mu5qod" path="res://scripts/hex_map_camera.gd" id="2_roenc"]
+[ext_resource type="Script" uid="uid://biehg6hve1jkw" path="res://scripts/debug_camera.gd" id="3_8bvhd"]
+[ext_resource type="PackedScene" uid="uid://bumgasrkg2l7p" path="res://scenes/hex_grid.tscn" id="3_t3wo0"]
+[ext_resource type="Texture2D" uid="uid://0kyxcfomk0lr" path="res://assets/sand.png" id="5_cf5ki"]
+[ext_resource type="Texture2D" uid="uid://ccxel0wem87gs" path="res://assets/grass.png" id="6_tasjk"]
+[ext_resource type="Texture2D" uid="uid://cob5qofvilgt0" path="res://assets/mud.png" id="7_gix1s"]
+[ext_resource type="Texture2D" uid="uid://bd15bj1mspfqr" path="res://assets/stone.png" id="8_lvkr7"]
+[ext_resource type="Texture2D" uid="uid://b5tsknljgmv24" path="res://assets/snow.png" id="9_gg6k1"]
+[ext_resource type="Shader" uid="uid://clfl70j43gilg" path="res://shaders/hex_cell_terrain_shader.gdshader" id="11_c2ox1"]
+[ext_resource type="Texture2D" uid="uid://ca20grb2upor5" path="res://assets/grid.png" id="12_gv3gu"]
+[ext_resource type="CompressedTexture2DArray" uid="uid://bktbwtk345agh" path="res://assets/terrain.png" id="12_lmpao"]
+[ext_resource type="Shader" uid="uid://ukbkgoc8eudr" path="res://shaders/wall_shader.gdshader" id="13_hgmmo"]
+[ext_resource type="PackedScene" uid="uid://dstaybgovslw2" path="res://scenes/hex_map_editor_ui.tscn" id="14_ll164"]
+[ext_resource type="PackedScene" uid="uid://gucv0pvo4683" path="res://scenes/hex_game_ui.tscn" id="15_ohjg2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gdj22"]
+render_priority = 0
+shader = ExtResource("11_c2ox1")
+shader_parameter/terrain_texture_2d_array = ExtResource("12_lmpao")
+shader_parameter/grid_texture = ExtResource("12_gv3gu")
+shader_parameter/grid_on = false
+shader_parameter/show_map_data = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_36krm"]
+render_priority = 0
+shader = ExtResource("13_hgmmo")
+shader_parameter/color = Color(1, 0, 0, 1)
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_sv3ps")
+
+[node name="HexMapCamera" type="Node3D" parent="." node_paths=PackedStringArray("hex_grid")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 100)
+script = ExtResource("2_roenc")
+hex_grid = NodePath("../HexGrid")
+
+[node name="Swivel" type="Node3D" parent="HexMapCamera"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+
+[node name="Stick" type="Node3D" parent="HexMapCamera/Swivel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
+
+[node name="MainCamera" type="Camera3D" parent="HexMapCamera/Swivel/Stick"]
+near = 1.0
+far = 1000.0
+
+[node name="DebugCamera" type="Camera3D" parent="."]
+near = 1.0
+far = 1000.0
+script = ExtResource("3_8bvhd")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 100000, 0)
+
+[node name="HexGrid" parent="." instance=ExtResource("3_t3wo0")]
+hex_colors = Array[Color]([Color(1, 1, 0, 1), Color(0, 1, 0, 1), Color(0, 0, 1, 1), Color(1, 0.647059, 0, 1), Color(1, 1, 1, 1)])
+hex_textures = Array[Texture2D]([ExtResource("5_cf5ki"), ExtResource("6_tasjk"), ExtResource("7_gix1s"), ExtResource("8_lvkr7"), ExtResource("9_gg6k1")])
+cell_count_x = 20
+cell_count_z = 15
+textured_terrain_shader_material = SubResource("ShaderMaterial_gdj22")
+walls_material = SubResource("ShaderMaterial_36krm")
+
+[node name="UI" type="Node3D" parent="."]
+
+[node name="HexMapEditorUi" parent="UI" node_paths=PackedStringArray("hex_grid", "main_camera_assembly", "debug_camera") instance=ExtResource("14_ll164")]
+hex_grid = NodePath("../../HexGrid")
+main_camera_assembly = NodePath("../../HexMapCamera")
+debug_camera = NodePath("../../DebugCamera")
+
+[node name="HexGameUi" parent="UI" node_paths=PackedStringArray("grid") instance=ExtResource("15_ohjg2")]
+grid = NodePath("../../HexGrid")
