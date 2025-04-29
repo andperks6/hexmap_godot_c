@@ -39,8 +39,8 @@ var locked: bool = false
 func _ready() -> void:
 	validate_position()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+# Called every physics frame. 'delta' is the elapsed time since the previous frame.
+func _physics_process(delta: float) -> void:
 	#Check to see if the main camera is the current camera
 	if (_main_camera.current) and (not locked):
 		#If so, then we will respond to user interactions on this camera
@@ -57,7 +57,7 @@ func _process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	#Check to see if the main camera is the current camera
-	if (_main_camera.current) and (not locked):	
+	if (_main_camera.current) and (not locked):
 		#If so, then we will respond to user interactions on this camera
 		
 		if event is InputEventKey and event.pressed:
@@ -65,6 +65,13 @@ func _input(event: InputEvent) -> void:
 				_adjust_zoom(-0.1)
 			elif event.keycode == KEY_X:
 				_adjust_zoom(0.1)
+		
+		# Handle mouse wheel zoom
+		elif event is InputEventMouseButton:
+			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+				_adjust_zoom(-0.05)  # Zoom in
+			elif event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+				_adjust_zoom(0.05)   # Zoom out
 
 #endregion
 
