@@ -348,6 +348,14 @@ theme_override_constants/margin_bottom = 10
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/PanelContainer2/MarginContainer"]
 layout_mode = 2
 
+[node name="CheckButton_EditMode" type="CheckButton" parent="CanvasLayer/PanelContainer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+text = "Edit Mode"
+
+[node name="HSeparator6" type="HSeparator" parent="CanvasLayer/PanelContainer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
 [node name="CheckButton_UrbanLevel" type="CheckButton" parent="CanvasLayer/PanelContainer2/MarginContainer/VBoxContainer"]
 layout_mode = 2
 focus_mode = 0
@@ -452,6 +460,7 @@ size_flags_horizontal = 4
 focus_mode = 0
 item_count = 4
 popup/item_0/text = "None"
+popup/item_0/id = 0
 popup/item_1/text = "Castle"
 popup/item_1/id = 1
 popup/item_2/text = "Ziggurat"
@@ -547,7 +556,7 @@ use_native_dialog = true
 [node name="LoadFileDialog" type="FileDialog" parent="CanvasLayer"]
 auto_translate_mode = 1
 title = "Open a File"
-size = Vector2i(207, 175)
+size = Vector2i(220, 175)
 ok_button_text = "Open"
 file_mode = 0
 access = 1
@@ -656,6 +665,7 @@ text = "OK"
 [connection signal="pressed" from="CanvasLayer/HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer4/CheckBox_RoadsIgnore" to="." method="_on_check_box_roads_ignore_pressed"]
 [connection signal="pressed" from="CanvasLayer/HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer4/CheckBox_RoadsYes" to="." method="_on_check_box_roads_yes_pressed"]
 [connection signal="pressed" from="CanvasLayer/HBoxContainer/PanelContainer/VBoxContainer/HBoxContainer4/CheckBox_RoadsNo" to="." method="_on_check_box_roads_no_pressed"]
+[connection signal="toggled" from="CanvasLayer/PanelContainer2/MarginContainer/VBoxContainer/CheckButton_EditMode" to="." method="_on_check_button_edit_mode_toggled"]
 [connection signal="toggled" from="CanvasLayer/PanelContainer2/MarginContainer/VBoxContainer/CheckButton_UrbanLevel" to="." method="_on_check_button_urban_level_toggled"]
 [connection signal="value_changed" from="CanvasLayer/PanelContainer2/MarginContainer/VBoxContainer/MarginContainer/UrbanLevelSlider" to="." method="_on_urban_level_slider_value_changed"]
 [connection signal="toggled" from="CanvasLayer/PanelContainer2/MarginContainer/VBoxContainer/CheckButton_FarmLevel" to="." method="_on_check_button_farm_level_toggled"]

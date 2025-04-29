@@ -475,9 +475,9 @@ func set_road (i: int, state: bool) -> void:
 	_roads[i] = state
 	
 	#Remove the road from its neighbor as well
-	var opposite_direction: HexDirectionsClass.HexDirections = int(HexDirectionsClass.opposite(index))
-	hex_neighbors[index]._roads[int(opposite_direction)] = state
-	hex_neighbors[index]._refresh_self_only()
+	var opposite_direction: HexDirectionsClass.HexDirections = int(HexDirectionsClass.opposite(i)) as HexDirectionsClass.HexDirections 
+	hex_neighbors[i]._roads[int(opposite_direction)] = state
+	hex_neighbors[i]._refresh_self_only()
 	
 	#Refresh this cell
 	_refresh_self_only()

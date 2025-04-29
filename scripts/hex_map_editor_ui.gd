@@ -450,6 +450,12 @@ func _on_load_file_dialog_canceled() -> void:
 func _on_exit_edit_mode_button_pressed() -> void:
 	edit_mode_exited.emit()
 
+func _on_check_button_edit_mode_toggled(toggled_on: bool) -> void:
+	if toggled_on:
+		enable()
+	else:
+		disable()
+
 
 #endregion
 
