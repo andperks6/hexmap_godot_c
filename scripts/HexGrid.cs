@@ -433,8 +433,8 @@ public partial class HexGrid : Node3D
     private List<HexCell> DijkstraGetVisibleCells(HexCell fromCell, int visibilityRange)
     {
         var cells = new List<HexCell>();
-        int searchFrontierPhase = fromCell.SearchPhase;
-
+        
+        _searchFrontierPhase += 2;
         if (_searchFrontier == null)
         {
             _searchFrontier = new HexCellPriorityQueue();
@@ -444,9 +444,12 @@ public partial class HexGrid : Node3D
             _searchFrontier.Clear();
         }
 
-        fromCell.SearchPhase = searchFrontierPhase;
+        visibilityRange += fromCell.ViewElevation;
+        fromCell.SearchPhase = _searchFrontierPhase;
         fromCell.Distance = 0;
         _searchFrontier.Enqueue(fromCell);
+
+        var fromCoordinates = fromCell.HexCoordinates;
 
         while (_searchFrontier.Count > 0)
         {
@@ -458,20 +461,21 @@ public partial class HexGrid : Node3D
             for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
             {
                 var neighbor = current.GetNeighbor(d);
-                if (neighbor == null || neighbor.SearchPhase > searchFrontierPhase)
+                if (neighbor == null || neighbor.SearchPhase > _searchFrontierPhase || !neighbor.Explorable)
                 {
                     continue;
                 }
 
                 int distance = current.Distance + 1;
-                if (distance > visibilityRange)
+                if ((distance + neighbor.ViewElevation) > visibilityRange ||
+                    distance > fromCoordinates.DistanceTo(neighbor.HexCoordinates))
                 {
                     continue;
                 }
 
-                if (neighbor.SearchPhase < searchFrontierPhase)
+                if (neighbor.SearchPhase < _searchFrontierPhase)
                 {
-                    neighbor.SearchPhase = searchFrontierPhase;
+                    neighbor.SearchPhase = _searchFrontierPhase;
                     neighbor.Distance = distance;
                     neighbor.SearchHeuristic = 0;
                     _searchFrontier.Enqueue(neighbor);
