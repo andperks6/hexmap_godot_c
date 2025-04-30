@@ -95,12 +95,17 @@ public partial class HexGameUI : Node3D
         if (_selectedUnit != null)
         {
             _selectedUnit.Location.DisableHighlight();
+            Grid.ClearPath();
         }
 
-        _selectedUnit = _currentCell.Unit;
-
-        if (_selectedUnit != null)
+        // Clear selection if clicking on an empty cell
+        if (_currentCell.Unit == null)
         {
+            _selectedUnit = null;
+        }
+        else
+        {
+            _selectedUnit = _currentCell.Unit;
             _selectedUnit.Location.EnableHighlight(Colors.Blue);
         }
     }

@@ -78,6 +78,12 @@ public partial class HexUnit : Node3D
 
     public async void Travel(List<HexCell> path)
     {
+        // Don't start new movement if already traveling
+        if (_pathToTravel.Count > 0 || _currentTravelLocation != null)
+        {
+            return;
+        }
+
         _location.Unit = null;
         _location = path[^1];
         _location.Unit = this;
@@ -175,7 +181,7 @@ public partial class HexUnit : Node3D
             }
         }
 
-        await LookAt(point);
+        base.LookAt(point);
         _orientation = RotationDegrees.Y;
     }
 

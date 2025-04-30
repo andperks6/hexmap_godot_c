@@ -115,12 +115,18 @@ public partial class HexMapEditorUI : Node3D
 
     public override void _Process(double delta)
     {
-        if (_enabled)
+        if (_enabled && HexGrid?.Units.Count > 0)
         {
             var pos = GetWorldPositionUnderCursor();
-            foreach (var unit in HexGrid.Units)
+            if (pos != Vector3.Zero)
             {
-                unit.LookAt(pos);
+                foreach (var unit in HexGrid.Units)
+                {
+                    if (unit != null)
+                    {
+                        unit.LookAt(pos);
+                    }
+                }
             }
         }
     }
