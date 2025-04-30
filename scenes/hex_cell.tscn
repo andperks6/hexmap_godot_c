@@ -1,13 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://r8nfx0vsi5ah"]
 
-[ext_resource type="Script" uid="uid://b6twg86exlx5f" path="res://scripts/hex_cell.gd" id="1_de0eb"]
+[ext_resource type="Script" uid="uid://cub8a7iu2p5o7" path="res://scripts/HexCell.cs" id="1_t5idx"]
 [ext_resource type="Texture2D" uid="uid://frq3kla6kkp5" path="res://assets/cell-outline.png" id="2_1f2bq"]
 
-[node name="HexCell" type="Node3D" node_paths=PackedStringArray("cell_content", "cell_information_label", "cell_selection_outline")]
-script = ExtResource("1_de0eb")
-cell_content = NodePath("CellContent")
-cell_information_label = NodePath("CellContent/PositionLabel")
-cell_selection_outline = NodePath("CellContent/HexSelectionOutline")
+[node name="HexCell" type="Node3D" node_paths=PackedStringArray("CellContent", "CellInformationLabel", "CellSelectionOutline")]
+script = ExtResource("1_t5idx")
+CellContent = NodePath("CellContent")
+CellInformationLabel = NodePath("CellContent/PositionLabel")
+CellSelectionOutline = NodePath("CellContent/HexSelectionOutline")
 
 [node name="CellContent" type="Node3D" parent="."]
 

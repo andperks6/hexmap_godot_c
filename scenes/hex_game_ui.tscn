@@ -1,9 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://gucv0pvo4683"]
 
-[ext_resource type="Script" uid="uid://c2nlv4jeoggp0" path="res://scripts/hex_game_ui.gd" id="1_avp0t"]
+[ext_resource type="Script" uid="uid://580qqdx32inh" path="res://scripts/HexGameUI.cs" id="1_0vnqr"]
 
 [node name="HexGameUi" type="Node3D"]
-script = ExtResource("1_avp0t")
+script = ExtResource("1_0vnqr")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 visible = false
@@ -13,4 +13,4 @@ offset_right = 8.0
 offset_bottom = 8.0
 text = "Enable Edit mode"
 
-[connection signal="pressed" from="CanvasLayer/EnableEditModeButton" to="." method="_on_enable_edit_mode_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/EnableEditModeButton" to="." method="OnEnableEditModeButtonPressed"]

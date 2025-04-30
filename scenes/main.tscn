@@ -1,8 +1,8 @@
 [gd_scene load_steps=18 format=3 uid="uid://b0jwbdlrgt1g2"]
 
-[ext_resource type="Script" uid="uid://dltxxoojehvy2" path="res://scripts/main.gd" id="1_sv3ps"]
-[ext_resource type="Script" uid="uid://mmxlt6mu5qod" path="res://scripts/hex_map_camera.gd" id="2_roenc"]
-[ext_resource type="Script" uid="uid://biehg6hve1jkw" path="res://scripts/debug_camera.gd" id="3_8bvhd"]
+[ext_resource type="Script" uid="uid://bk3nh1gihab6d" path="res://scripts/Main.cs" id="1_tefeu"]
+[ext_resource type="Script" uid="uid://ctfhprxo51yvv" path="res://scripts/HexMapCamera.cs" id="2_tipki"]
+[ext_resource type="Script" uid="uid://cn8roih3pce22" path="res://scripts/DebugCamera.cs" id="3_85g3d"]
 [ext_resource type="PackedScene" uid="uid://bumgasrkg2l7p" path="res://scenes/hex_grid.tscn" id="3_t3wo0"]
 [ext_resource type="Texture2D" uid="uid://0kyxcfomk0lr" path="res://assets/sand.png" id="5_cf5ki"]
 [ext_resource type="Texture2D" uid="uid://ccxel0wem87gs" path="res://assets/grass.png" id="6_tasjk"]
@@ -30,11 +30,11 @@ shader = ExtResource("13_hgmmo")
 shader_parameter/color = Color(1, 0, 0, 1)
 
 [node name="Main" type="Node3D"]
-script = ExtResource("1_sv3ps")
+script = ExtResource("1_tefeu")
 
 [node name="HexMapCamera" type="Node3D" parent="." node_paths=PackedStringArray("hex_grid")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 100)
-script = ExtResource("2_roenc")
+script = ExtResource("2_tipki")
 hex_grid = NodePath("../HexGrid")
 
 [node name="Swivel" type="Node3D" parent="HexMapCamera"]
@@ -50,7 +50,7 @@ far = 1000.0
 [node name="DebugCamera" type="Camera3D" parent="."]
 near = 1.0
 far = 1000.0
-script = ExtResource("3_8bvhd")
+script = ExtResource("3_85g3d")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 100000, 0)

@@ -351,7 +351,7 @@ func get_neighbor (direction: HexDirectionsClass.HexDirections) -> HexCell:
 func set_neighbor (direction: HexDirectionsClass.HexDirections, cell: HexCell) -> void:
 	#Set the other cell as a neighbor of this cell
 	hex_neighbors[int(direction)] = cell
-	
+	 
 	#Set this cell as a neighbor of the other cell
 	var opposite_direction = HexDirectionsClass.opposite(direction)
 	cell.hex_neighbors[int(opposite_direction)] = self
