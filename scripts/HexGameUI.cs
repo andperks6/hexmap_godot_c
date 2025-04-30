@@ -16,7 +16,7 @@ public partial class HexGameUI : Node3D
 
     public override void _Ready()
     {
-        Grid = GetNode<HexGrid>("../../HexGrid");
+        // Grid = GetNode<HexGrid>("../../HexGrid");
 
     }
 

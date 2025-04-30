@@ -106,9 +106,9 @@ public partial class HexMapEditorUI : Node3D
     {
         InitializeNodeReferences();
         InitializeUI();
-        HexGrid = GetNode<HexGrid>("../../HexGrid");
-        MainCameraAssembly = GetNode<HexMapCamera>("../../HexMapCamera");
-        DebugCamera = GetNode<DebugCamera>("../../DebugCamera");
+        // HexGrid = GetNode<HexGrid>("../../HexGrid");
+        // MainCameraAssembly = GetNode<HexMapCamera>("../../HexMapCamera");
+        // DebugCamera = GetNode<DebugCamera>("../../DebugCamera");
 
         _hexMapGenerator.HexGrid = HexGrid;
     }
