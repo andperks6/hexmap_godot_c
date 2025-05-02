@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bumgasrkg2l7p"]
+[gd_scene load_steps=30 format=3 uid="uid://bumgasrkg2l7p"]
 
 [ext_resource type="Script" uid="uid://bevngepr65eu8" path="res://scripts/HexGrid.cs" id="1_vljl0"]
 [ext_resource type="PackedScene" uid="uid://ntx8bgtllrbv" path="res://scenes/hex_unit.tscn" id="2_od4dn"]
@@ -13,6 +13,8 @@
 [ext_resource type="Shader" uid="uid://cs1e48sxl8oht" path="res://shaders/water_shore_shader.gdshader" id="8_vthjl"]
 [ext_resource type="Shader" uid="uid://cpo1cvsoccfrp" path="res://shaders/estuaries_shader.gdshader" id="9_4roe3"]
 [ext_resource type="Material" uid="uid://crqu67hbnmjg2" path="res://resources/urban_features/urban_shader_material.tres" id="10_tl11e"]
+[ext_resource type="Texture2D" uid="uid://md60qpuonyih" path="res://assets/Water_N_A.png" id="11_o4pdn"]
+[ext_resource type="Texture2D" uid="uid://bsudisurndjfw" path="res://assets/Water_N_B.png" id="12_vngtj"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o4pdn"]
 render_priority = 0
@@ -22,11 +24,31 @@ shader_parameter/grid_texture = ExtResource("5_3uko5")
 shader_parameter/grid_on = false
 shader_parameter/show_map_data = true
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_o4pdn"]
+frequency = 0.0035
+fractal_type = 2
+fractal_gain = 1.0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vngtj"]
+seamless = true
+noise = SubResource("FastNoiseLite_o4pdn")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6crjs"]
 render_priority = 0
 shader = ExtResource("4_703fq")
-shader_parameter/base_color = Color(0.244129, 0.468967, 0.999601, 0.658824)
-shader_parameter/noise_texture = ExtResource("5_cm4mn")
+shader_parameter/wave_speed = 0.5
+shader_parameter/wave_a = Vector4(1, 1, 0.35, 3)
+shader_parameter/wave_b = Vector4(1, 0.6, 0.3, 1.55)
+shader_parameter/wave_c = Vector4(1, 1.3, 0.25, 0.9)
+shader_parameter/base_color = Color(0.114159, 0.295419, 0.380432, 1)
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_vngtj")
+shader_parameter/normal_map_a = ExtResource("11_o4pdn")
+shader_parameter/normal_map_b = ExtResource("12_vngtj")
+shader_parameter/flow_speed = 2.0
+shader_parameter/refraction = 0.05
+shader_parameter/transparency = 0.9
+shader_parameter/river_depth = 0.5
+shader_parameter/whitewater_amount = 0.3
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lf52a"]
 render_priority = 0
@@ -34,23 +56,87 @@ shader = ExtResource("6_ok46w")
 shader_parameter/base_color = Color(1, 0, 0, 1)
 shader_parameter/noise_texture = ExtResource("5_cm4mn")
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jgbje"]
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_o4pdn"]
+seamless = true
+noise = SubResource("FastNoiseLite_jgbje")
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_q2oyx"]
 render_priority = 0
 shader = ExtResource("7_vp3mt")
-shader_parameter/base_color = Color(0.243137, 0.470588, 1, 0.658824)
-shader_parameter/noise_texture = ExtResource("5_cm4mn")
+shader_parameter/wave_speed = 0.1
+shader_parameter/wave_a = Vector4(1, 1, 0.35, 3)
+shader_parameter/wave_b = Vector4(1, 0.6, 0.3, 1.55)
+shader_parameter/wave_c = Vector4(1, 1.3, 0.25, 0.9)
+shader_parameter/base_color = Color(0.176363, 0.415253, 0.999997, 0.658824)
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_o4pdn")
+shader_parameter/normal_map_a = ExtResource("11_o4pdn")
+shader_parameter/normal_map_b = ExtResource("12_vngtj")
+shader_parameter/sampler_scale = Vector2(0.25, 0.25)
+shader_parameter/refraction = 0.075
+shader_parameter/transparency = 0.92
+shader_parameter/color_deep = Color(0, 0.2, 0.3, 0.7)
+shader_parameter/beers_law = 2.0
+shader_parameter/depth_offset = -0.75
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_w64d6"]
+noise_type = 3
+frequency = 0.0109
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_uwfmy"]
+seamless = true
+noise = SubResource("FastNoiseLite_w64d6")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wcv8b"]
 render_priority = 0
 shader = ExtResource("8_vthjl")
-shader_parameter/base_color = Color(0.243137, 0.470588, 1, 0.658824)
-shader_parameter/noise_texture = ExtResource("5_cm4mn")
+shader_parameter/wave_speed = 1.0
+shader_parameter/wave_a = Vector4(1, 1, 0.35, 3)
+shader_parameter/wave_b = Vector4(1, 0.6, 0.3, 1.55)
+shader_parameter/wave_c = Vector4(1, 1.3, 0.25, 0.9)
+shader_parameter/base_color = Color(0.133333, 0.439216, 0.862745, 0.815686)
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_uwfmy")
+shader_parameter/normal_map_a = ExtResource("11_o4pdn")
+shader_parameter/normal_map_b = ExtResource("12_vngtj")
+shader_parameter/sampler_scale = Vector2(0.25, 0.25)
+shader_parameter/refraction = 0.075
+shader_parameter/transparency = 0.92
+shader_parameter/color_deep = Color(0, 0.2, 0.3, 0.7)
+shader_parameter/beers_law = 2.0
+shader_parameter/depth_offset = -0.75
+shader_parameter/foam_intensity = 0.5
+shader_parameter/wave_intensity = 0.2
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vngtj"]
+frequency = 0.0035
+fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_w64d6"]
+seamless = true
+noise = SubResource("FastNoiseLite_vngtj")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ar328"]
 render_priority = 0
 shader = ExtResource("9_4roe3")
+shader_parameter/wave_speed = 0.5
+shader_parameter/wave_a = Vector4(1, 1, 0.35, 3)
+shader_parameter/wave_b = Vector4(1, 0.6, 0.3, 1.55)
+shader_parameter/wave_c = Vector4(1, 1.3, 0.25, 0.9)
 shader_parameter/base_color = Color(0.243137, 0.470588, 1, 0.658824)
-shader_parameter/noise_texture = ExtResource("5_cm4mn")
+shader_parameter/noise_texture = SubResource("NoiseTexture2D_w64d6")
+shader_parameter/normal_map_a = ExtResource("11_o4pdn")
+shader_parameter/normal_map_b = ExtResource("12_vngtj")
+shader_parameter/sampler_scale = Vector2(0.25, 0.25)
+shader_parameter/refraction = 0.075
+shader_parameter/transparency = 0.92
+shader_parameter/color_deep = Color(0, 0.2, 0.3, 0.7)
+shader_parameter/beers_law = 2.0
+shader_parameter/depth_offset = -0.75
+shader_parameter/flow_speed = 0.2
+shader_parameter/whitewater_amount = 0.2
 
 [node name="HexGrid" type="Node3D"]
 script = ExtResource("1_vljl0")
