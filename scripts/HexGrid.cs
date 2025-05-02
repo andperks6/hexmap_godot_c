@@ -145,13 +145,13 @@ public partial class HexGrid : Node3D
 
         foreach (var chunk in _hexGridChunks)
         {
-            chunk.SetTerrainMeshMaterial(TexturedTerrainShaderMaterial);
-            chunk.SetRiversMeshMaterial(RiverShaderMaterial);
-            chunk.SetRoadMeshMaterial(RoadShaderMaterial);
-            chunk.SetWaterMeshMaterial(WaterShaderMaterial);
-            chunk.SetWaterShoreMeshMaterial(WaterShoreShaderMaterial);
-            chunk.SetEstuariesMeshMaterial(EstuariesShaderMaterial);
-            chunk.SetWallsMeshMaterial(WallsMaterial);
+            chunk.SetMaterial(HexMaterialType.Terrain, TexturedTerrainShaderMaterial);
+            chunk.SetMaterial(HexMaterialType.Rivers, RiverShaderMaterial);
+            chunk.SetMaterial(HexMaterialType.Roads, RoadShaderMaterial);
+            chunk.SetMaterial(HexMaterialType.Water, WaterShaderMaterial);
+            chunk.SetMaterial(HexMaterialType.WaterShore, WaterShoreShaderMaterial);
+            chunk.SetMaterial(HexMaterialType.Estuaries, EstuariesShaderMaterial);
+            chunk.SetMaterial(HexMaterialType.Walls, WallsMaterial);
             chunk.Refresh();
             chunk.RequestRefresh(); // TODO: Investigate why double refresh is needed
         }
